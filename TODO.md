@@ -2,6 +2,7 @@
 
 * [mid] extract gradle build in root project
 * [mid] introduce spring BOM
+* [mid] add linter
 
 
 ### Read:
