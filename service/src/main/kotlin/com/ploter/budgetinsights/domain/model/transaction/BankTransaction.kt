@@ -3,7 +3,7 @@ package com.ploter.budgetinsights.domain.model.transaction;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-class Transaction(
+class BankTransaction(
     val date: Instant,
     val amount: BigDecimal,
     val currency: String,

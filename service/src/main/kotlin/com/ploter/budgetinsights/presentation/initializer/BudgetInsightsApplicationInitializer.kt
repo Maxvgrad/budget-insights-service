@@ -1,12 +1,8 @@
-package com.ploter.budgetinsights.presentation.initializer;
+package com.ploter.budgetinsights.presentation.initializer
 
+import com.ploter.budgetinsights.presentation.configuration.ApplicationConfiguration
 import com.ploter.budgetinsights.presentation.configuration.SpringConfiguration
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.XmlWebApplicationContext
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
-
-import javax.servlet.ServletContext;
 
 class BudgetInsightsApplicationInitializer : AbstractAnnotationConfigDispatcherServletInitializer() {
 
@@ -15,7 +11,12 @@ class BudgetInsightsApplicationInitializer : AbstractAnnotationConfigDispatcherS
     }
 
     override fun getServletConfigClasses(): Array<Class<*>> {
-        return arrayOf(SpringConfiguration::class.java) // 	If an application context hierarchy is not required, applications can return all configuration through getRootConfigClasses() and null from getServletConfigClasses().
+        // 	If an application context hierarchy is not required,
+        // 	applications can return all configuration through getRootConfigClasses() and null from getServletConfigClasses().
+        return arrayOf(
+                SpringConfiguration::class.java,
+                ApplicationConfiguration::class.java,
+        )
     }
 
     override fun getServletMappings(): Array<String> {

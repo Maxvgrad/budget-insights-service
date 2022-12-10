@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    kotlin("plugin.jpa") version "1.6.21"
-    id("java-library")
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.jpa")
     id("war")
+    id("java-library")
 }
 
 group = "com.ploter"
@@ -18,22 +18,31 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-web
     //    implementation("org.springframework:spring-web:5.3.22")
     // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     implementation("org.springframework:spring-webmvc:5.3.23")
-    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+//     https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
+
 
 //    implementation("javax.servlet:jstl:1.2")
-
 //    compileOnly("org.projectlombok:lombok")
+    testImplementation("org.springframework:spring-test:5.3.23")
+    testImplementation(kotlin("test-common"))
+    testImplementation(kotlin("test-junit5"))
 }
+tasks.test {
+    useJUnitPlatform()
+}
+//kotlin {
+//    jvmToolchain {
+//        languageVersion.set(JavaLanguageVersion.of(17)) // "8"
+//    }
+//}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
