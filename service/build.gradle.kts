@@ -23,10 +23,14 @@ dependencies {
     //    implementation("org.springframework:spring-web:5.3.22")
     // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     implementation("org.springframework:spring-webmvc:5.3.23")
+// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    implementation("commons-fileupload:commons-fileupload:1.4")
+
 //     https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
+
 
 
 //    implementation("javax.servlet:jstl:1.2")
