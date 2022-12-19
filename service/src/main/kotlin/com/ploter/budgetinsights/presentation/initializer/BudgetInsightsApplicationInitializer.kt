@@ -1,6 +1,7 @@
 package com.ploter.budgetinsights.presentation.initializer
 
 import com.ploter.budgetinsights.presentation.configuration.ApplicationConfiguration
+import com.ploter.budgetinsights.presentation.configuration.PersistenceConfiguration
 import com.ploter.budgetinsights.presentation.configuration.SpringConfiguration
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 
@@ -16,6 +17,7 @@ class BudgetInsightsApplicationInitializer : AbstractAnnotationConfigDispatcherS
         return arrayOf(
                 SpringConfiguration::class.java,
                 ApplicationConfiguration::class.java,
+                PersistenceConfiguration::class.java,
         )
     }
 

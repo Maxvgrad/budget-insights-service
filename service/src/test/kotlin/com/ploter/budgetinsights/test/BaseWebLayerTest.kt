@@ -1,5 +1,7 @@
 package com.ploter.budgetinsights.test
 
+import com.ploter.budgetinsights.presentation.configuration.ApplicationConfiguration
+import com.ploter.budgetinsights.presentation.configuration.PersistenceConfiguration
 import com.ploter.budgetinsights.presentation.configuration.SpringConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,7 +16,8 @@ import org.springframework.web.context.WebApplicationContext
 @WebAppConfiguration
 @ContextConfiguration(classes=[
     SpringConfiguration::class,
-    ApplicationTestConfiguration::class
+    ApplicationConfiguration::class,
+    PersistenceConfiguration::class,
 ])
 open class BaseWebLayerTest {
 

@@ -1,14 +1,17 @@
 package com.ploter.budgetinsights.domain.model.transaction;
 
-import java.math.BigDecimal;
-import java.time.Instant;
+import com.ploter.budgetinsights.domain.model.TimePoint
+import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId
+import java.math.BigDecimal
 
 class BankTransaction(
-    val date: Instant,
-    val amount: BigDecimal,
-    val currency: String,
-    val description: String,
-    val merchant: String,
-    val payment_reference: String,
-    val account: String
+        val bankTransactionId: BankTransactionId,
+        val importGroupId: ImportGroupId,
+        val date: TimePoint,
+        val amount: BigDecimal,
+        val currency: String,
+        val description: String,
+        val merchant: String,
+        val reference: String,
+        val account: String
 )

@@ -1,4 +1,6 @@
+import nu.studer.gradle.jooq.JooqGenerate
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jooq.meta.jaxb.Logging
 
 plugins {
     kotlin("jvm")
@@ -6,6 +8,8 @@ plugins {
     kotlin("plugin.jpa")
     id("war")
     id("java-library")
+    id("org.flywaydb.flyway") version "9.8.1"
+    id("nu.studer.jooq") version "8.0" // https://github.com/etiennestuder/gradle-jooq-plugin
 }
 
 group = "com.ploter"
@@ -19,20 +23,20 @@ configurations {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.springframework/spring-web
-    //    implementation("org.springframework:spring-web:5.3.22")
-    // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     implementation("org.springframework:spring-webmvc:5.3.23")
-// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
     implementation("commons-fileupload:commons-fileupload:1.4")
 
-//     https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     implementation("javax.servlet:javax.servlet-api:4.0.1")
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
 
+    implementation("org.apache.commons:commons-csv:1.9.0")
+    implementation("org.jooq:jooq:3.18.0-SNAPSHOT")
 
+    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.flywaydb:flyway-core:9.10.1")
+    jooqGenerator("org.postgresql:postgresql:42.5.0")
 
+    // [TEST]
 //    implementation("javax.servlet:jstl:1.2")
 //    compileOnly("org.projectlombok:lombok")
     testImplementation("org.springframework:spring-test:5.3.23")
@@ -42,11 +46,6 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
-//kotlin {
-//    jvmToolchain {
-//        languageVersion.set(JavaLanguageVersion.of(17)) // "8"
-//    }
-//}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
@@ -57,4 +56,45 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+jooq {
+    configurations {
+        create("main") {  // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation
+            jooqConfiguration.apply {
+                logging = Logging.WARN
+                jdbc.apply {
+                    driver = "org.postgresql.Driver"
+                    url = "jdbc:postgresql://localhost:5432/budget-insights"
+                    user = "test"
+                    password = "test"
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                    generate.apply {
+                        isDeprecated = false
+                        isRecords = true
+                        isImmutablePojos = true
+                        isFluentSetters = true
+                    }
+                    target.apply {
+                        packageName = "com.ploter.budgetinsights.infrastracture.persistence.jooq.model"
+                        directory = "src/generated-src/jooq/main/java"
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
+
+gradle.taskGraph.whenReady {
+    tasks.withType<JooqGenerate> {
+        enabled = false
+    }
 }

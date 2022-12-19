@@ -3,6 +3,7 @@
 * [mid] extract gradle build in root project
 * [mid] introduce spring BOM
 * [mid] add linter (detekt)
+* [mid] add source set for integration tests
 
 
 ### Read:

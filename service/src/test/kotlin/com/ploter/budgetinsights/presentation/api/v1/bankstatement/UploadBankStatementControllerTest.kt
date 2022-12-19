@@ -8,8 +8,11 @@ class UploadBankStatementControllerTest: BaseWebLayerTest() {
 
     @Test
     fun test() {
+        val fileName = "/statement/csv/LHV_Account_Statement_2022-12-17.csv"
+        val fileBytes = this.javaClass.getResourceAsStream(fileName).use { it!!.readBytes() }
+
         mockMvc.multipart("/statements") {
-            file("file", "ABC".toByteArray(charset("UTF8")))
+            file("file", fileBytes)
         }
                 .andExpect {
             status { isOk() }
