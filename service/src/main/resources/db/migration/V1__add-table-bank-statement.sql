@@ -4,12 +4,16 @@ CREATE TABLE IF NOT EXISTS bank_statement
     name VARCHAR(255) NOT NULL
 );
 
+CREATE SEQUENCE IF NOT EXISTS bank_statement_id_seq AS BIGINT;
+
 CREATE TABLE IF NOT EXISTS import_group
 (
     id                 BIGINT       NOT NULL PRIMARY KEY,
     import_source_id   VARCHAR(255) NOT NULL,
     import_source_type VARCHAR(255) NOT NULL
 );
+
+CREATE SEQUENCE IF NOT EXISTS import_group_id_seq AS BIGINT;
 
 CREATE TABLE IF NOT EXISTS bank_transaction
 (
@@ -22,4 +26,6 @@ CREATE TABLE IF NOT EXISTS bank_transaction
     merchant        VARCHAR                     NOT NULL DEFAULT '',
     reference       VARCHAR                     NOT NULL DEFAULT '',
     account         VARCHAR                     NOT NULL DEFAULT ''
-)
+);
+
+CREATE SEQUENCE IF NOT EXISTS bank_transaction_id_seq AS BIGINT;

@@ -1,4 +1,4 @@
-package com.ploter.budgetinsights.domain.model.transaction;
+package com.ploter.budgetinsights.domain.model.banktransaction;
 
 import com.ploter.budgetinsights.domain.model.TimePoint
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId

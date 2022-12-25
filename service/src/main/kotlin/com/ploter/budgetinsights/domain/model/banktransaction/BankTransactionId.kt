@@ -1,4 +1,4 @@
-package com.ploter.budgetinsights.domain.model.transaction
+package com.ploter.budgetinsights.domain.model.banktransaction
 
 @JvmInline
 value class BankTransactionId

@@ -1,8 +1,6 @@
 package com.ploter.budgetinsights.test
 
-import com.ploter.budgetinsights.presentation.configuration.ApplicationConfiguration
-import com.ploter.budgetinsights.presentation.configuration.PersistenceConfiguration
-import com.ploter.budgetinsights.presentation.configuration.SpringConfiguration
+import com.ploter.budgetinsights.presentation.configuration.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.ContextConfiguration
@@ -14,18 +12,20 @@ import org.springframework.web.context.WebApplicationContext
 
 @ExtendWith(SpringExtension::class)
 @WebAppConfiguration
-@ContextConfiguration(classes=[
-    SpringConfiguration::class,
-    ApplicationConfiguration::class,
-    PersistenceConfiguration::class,
+@ContextConfiguration(classes = [
+  SpringConfiguration::class,
+  ApplicationConfiguration::class,
+  DataSourceConfiguration::class,
+  PersistenceConfiguration::class,
+  ParserConfiguration::class,
 ])
 open class BaseWebLayerTest {
 
-    lateinit var mockMvc : MockMvc
+  lateinit var mockMvc: MockMvc
 
-    @BeforeEach
-    fun setup(wac: WebApplicationContext) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build()
-    }
+  @BeforeEach
+  fun setup(wac: WebApplicationContext) {
+    mockMvc = MockMvcBuilders.webAppContextSetup(wac).build()
+  }
 
 }

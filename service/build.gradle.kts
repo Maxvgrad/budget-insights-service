@@ -35,6 +35,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.flywaydb:flyway-core:9.10.1")
     jooqGenerator("org.postgresql:postgresql:42.5.0")
+    runtimeOnly("org.postgresql:postgresql:42.5.0")
 
     // [TEST]
 //    implementation("javax.servlet:jstl:1.2")
@@ -75,6 +76,9 @@ jooq {
                     database.apply {
                         name = "org.jooq.meta.postgres.PostgresDatabase"
                         inputSchema = "public"
+                        excludes = """
+                            flyway_schema_history                  # Flyway tables
+                        """.trimIndent()
                     }
                     generate.apply {
                         isDeprecated = false
@@ -94,7 +98,9 @@ jooq {
 }
 
 gradle.taskGraph.whenReady {
-    tasks.withType<JooqGenerate> {
-        enabled = false
+    if (hasTask(":classes")) {
+        tasks.withType<JooqGenerate> {
+            enabled = false
+        }
     }
 }
