@@ -23,26 +23,26 @@ configurations {
 }
 
 dependencies {
-    implementation("org.springframework:spring-webmvc:5.3.23")
-    implementation("commons-fileupload:commons-fileupload:1.4")
+  implementation("org.springframework:spring-webmvc:5.3.23")
+  implementation("commons-fileupload:commons-fileupload:1.4")
 
-    implementation("javax.servlet:javax.servlet-api:4.0.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
+  implementation("javax.servlet:javax.servlet-api:4.0.1")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
 
-    implementation("org.apache.commons:commons-csv:1.9.0")
-    implementation("org.jooq:jooq:3.18.0-SNAPSHOT")
+  implementation("org.apache.commons:commons-csv:1.9.0")
+  implementation("org.jooq:jooq:3.18.0-SNAPSHOT")
 
-    implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("org.flywaydb:flyway-core:9.10.1")
-    jooqGenerator("org.postgresql:postgresql:42.5.0")
-    runtimeOnly("org.postgresql:postgresql:42.5.0")
+  implementation("com.zaxxer:HikariCP:5.0.1")
+  implementation("org.flywaydb:flyway-core:9.10.1")
+  jooqGenerator("org.postgresql:postgresql:42.5.1")
+  runtimeOnly("org.postgresql:postgresql:42.5.1")
 
-    // [TEST]
+  // [TEST]
 //    implementation("javax.servlet:jstl:1.2")
 //    compileOnly("org.projectlombok:lombok")
-    testImplementation("org.springframework:spring-test:5.3.23")
-    testImplementation(kotlin("test-common"))
-    testImplementation(kotlin("test-junit5"))
+  testImplementation("org.springframework:spring-test:5.3.23")
+  testImplementation(kotlin("test-common"))
+  testImplementation(kotlin("test-junit5"))
 }
 tasks.test {
     useJUnitPlatform()
@@ -98,9 +98,9 @@ jooq {
 }
 
 gradle.taskGraph.whenReady {
-    if (hasTask(":classes")) {
-        tasks.withType<JooqGenerate> {
-            enabled = false
-        }
+  if (hasTask(":classes") || hasTask(":service:classes")) {
+    tasks.withType<JooqGenerate> {
+      enabled = false
     }
+  }
 }

@@ -7,3 +7,10 @@ In order to alter DB schema and update the code one would need to:
 1. Bring up DB docker image: `docker-compose -f service/src/test/resources/docker-compose.yml up -d -- postgres`
 1. Generate jOOQ bindings for updated schema: `./gradlew generateJooq`
 1. Commit DB migration and generated jOOQ classes in one go.
+
+## Local development with Docker
+
+```bash
+docker exec -it <containerId> psql -U <user> -d postgres -c 'DROP DATABASE "budget-insights";'
+docker exec -it <containerId> psql -U <user> -d postgres -c 'CREATE DATABASE "budget-insights";'
+```
