@@ -7,7 +7,7 @@ import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId
 import java.math.BigDecimal
 
 class PersistentBankTransactionFactory(
-  private val sequence: PersistentBankTransactionSequence
+  private val sequence: JooqBankTransactionSequence
 ) : BankTransactionFactory {
   override fun create(
     importGroupId: ImportGroupId,
@@ -20,7 +20,7 @@ class PersistentBankTransactionFactory(
     account: String
   ): BankTransaction =
     BankTransaction(
-      bankTransactionId = sequence.nexVal(),
+      id = sequence.nextVal(),
       importGroupId = importGroupId,
       date = date,
       amount = amount,

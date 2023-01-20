@@ -1,62 +1,88 @@
 package com.ploter.budgetinsights.application.bankstatement
 
 import com.ploter.budgetinsights.application.bankstatement.command.UploadBankStatementCommand
+import com.ploter.budgetinsights.application.banktransactionclassification.ClassifyBankTransaction
+import com.ploter.budgetinsights.domain.model.TimePoint
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatement
-import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementId
+import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementFactory
+import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementRepository
 import com.ploter.budgetinsights.domain.model.bankstatementtemplate.BankStatementTemplateRepository
 import com.ploter.budgetinsights.domain.model.banktransaction.BankTransactionFactory
-import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId
+import com.ploter.budgetinsights.domain.model.banktransaction.BankTransactionRepository
+import com.ploter.budgetinsights.domain.model.banktransactionclassification.BankTransactionClassificationRepository
+import com.ploter.budgetinsights.domain.model.importgroup.ImportGroup
+import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupFactory
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupRepository
+import com.ploter.budgetinsights.domain.model.importgroup.ImportSourceId
+import com.ploter.budgetinsights.domain.model.importgroup.ImportSourceType
 import com.ploter.budgetinsights.domain.model.parser.FileParser
+import java.math.BigDecimal
+import java.time.Instant
 import java.util.function.Function
 
 class UploadBankStatement(
   private val bankStatementTemplateRepository: BankStatementTemplateRepository,
   private val bankTransactionFactory: BankTransactionFactory,
+  private val bankTransactionRepository: BankTransactionRepository,
+  private val bankStatementFactory: BankStatementFactory,
+  private val bankStatementRepository: BankStatementRepository,
+  private val importGroupFactory: ImportGroupFactory,
   private val importGroupRepository: ImportGroupRepository,
+  private val classifyBankTransaction: ClassifyBankTransaction,
+  private val bankTransactionClassificationRepository: BankTransactionClassificationRepository,
   private val parsers: List<FileParser>
 ) {
 
   fun <T> execute(command: UploadBankStatementCommand, transformer: Function<BankStatement, T>): T {
-
-    val parser: FileParser = parsers.find { it.canParse(command.fileName) } ?: throw IllegalArgumentException("Parser not found.")
+    val parser: FileParser = parsers.find { it.canParse(command.fileName) }
+      ?: throw IllegalArgumentException("Parser not found.")
     val file = parser.parse(command.content)
 
-//    val reader = InputStreamReader(ByteArrayInputStream(command.content), "UTF-8")
-//    val parser = CSVParser(reader, CSVFormat.DEFAULT)
+    val statement: BankStatement = bankStatementFactory.create(command.fileName)
+    bankStatementRepository.save(statement)
 
-//    importGroupRepository.save(ImportGroup(
-//
-//    ))
+    val import: ImportGroup = importGroupFactory.create(
+      importSourceId = ImportSourceId(statement.id.value),
+      importSourceType = ImportSourceType.STATEMENT
+    )
 
-    val bankStatementTemplate = bankStatementTemplateRepository.find()
-    val importGroupId = ImportGroupId.newInstance()
+    importGroupRepository.save(import)
 
-      file.rows.map { record ->
-//        val date = record.get(bankStatementTemplate.date)
-//        val amount = record.get(bankStatementTemplate.amount)
-//        val currency = record.get(bankStatementTemplate.currency)
-//        val description = record.get(bankStatementTemplate.description)
-//        val merchant = record.get(bankStatementTemplate.merchant)
-//        val reference = record.get(bankStatementTemplate.reference)
-//        val account = record.get(bankStatementTemplate.account)
+    val templates = bankStatementTemplateRepository.find()
 
-//        bankTransactionFactory.create(
-//          importGroupId = importGroupId,
-//          date = TimePoint(Instant.parse(date)),
-//          amount = BigDecimal(amount),
-//          currency = currency,
-//          description = description,
-//          merchant = merchant,
-//          reference = reference,
-//          account = account
-//        )
-      }
+    val template = templates.sortedWith(Comparator.comparingInt {t ->
+      t.getTemplateHeaderNames().count { hn -> file.rows.first().contains(hn) }
+    }).last()
 
-    return transformer.apply(BankStatement(
-      id = BankStatementId.newInstance(),
-      fileName = command.fileName
-    ))
+
+    val transactions = file.rows.map { record ->
+        val date = record[template.date]
+        val amount = record[template.amount]
+        val currency = record[template.currency]
+        val description = record[template.description]
+        val merchant = record[template.merchant]
+        val reference = record[template.reference]
+        val account = record[template.account]
+
+        bankTransactionFactory.create(
+          importGroupId = import.id,
+          date = TimePoint(Instant.parse(date)),
+          amount = BigDecimal(amount),
+          currency = currency!!,
+          description = description!!,
+          merchant = merchant!!,
+          reference = reference!!,
+          account = account!!
+        )
+    }
+
+    val classifications = transactions.map { t ->
+      classifyBankTransaction.execute(t)
+    }
+
+    bankTransactionRepository.save(transactions)
+    bankTransactionClassificationRepository.save(classifications)
+    return transformer.apply(statement)
   }
 
 }

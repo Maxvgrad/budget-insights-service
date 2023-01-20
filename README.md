@@ -11,6 +11,6 @@ In order to alter DB schema and update the code one would need to:
 ## Local development with Docker
 
 ```bash
-docker exec -it <containerId> psql -U <user> -d postgres -c 'DROP DATABASE "budget-insights";'
-docker exec -it <containerId> psql -U <user> -d postgres -c 'CREATE DATABASE "budget-insights";'
+docker exec -it <containerId> psql -U test -d postgres -c 'DROP DATABASE "budget-insights";'
+docker exec -it <containerId> psql -U test -d postgres -c 'CREATE DATABASE "budget-insights";'
 ```

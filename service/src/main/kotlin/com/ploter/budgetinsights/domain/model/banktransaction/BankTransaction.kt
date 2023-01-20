@@ -5,7 +5,7 @@ import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId
 import java.math.BigDecimal
 
 class BankTransaction(
-        val bankTransactionId: BankTransactionId,
+        val id: BankTransactionId,
         val importGroupId: ImportGroupId,
         val date: TimePoint,
         val amount: BigDecimal,

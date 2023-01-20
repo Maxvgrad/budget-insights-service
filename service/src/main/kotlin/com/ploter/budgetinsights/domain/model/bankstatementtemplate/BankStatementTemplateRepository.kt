@@ -2,6 +2,6 @@ package com.ploter.budgetinsights.domain.model.bankstatementtemplate
 
 interface BankStatementTemplateRepository {
 
-    fun find(): BankStatementTemplate
+    fun find(): List<BankStatementTemplate>
 
 }
