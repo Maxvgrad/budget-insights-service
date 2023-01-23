@@ -55,10 +55,6 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
 jooq {
     configurations {
         create("main") {  // name of the jOOQ configuration

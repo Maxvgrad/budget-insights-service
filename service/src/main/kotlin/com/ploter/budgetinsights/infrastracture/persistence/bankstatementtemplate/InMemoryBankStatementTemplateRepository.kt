@@ -11,9 +11,9 @@ class InMemoryBankStatementTemplateRepository : BankStatementTemplateRepository 
       amount = "Amount",
       currency = "Currency",
       description = "Description",
-      merchant = "Merchant",
-      reference = "Reference",
-      account = "Account",
+      merchant = "Sender/receiver name",
+      reference = "Reference number",
+      account = "Sender/receiver account",
     ),
     BankStatementTemplate(
       date = "Date",

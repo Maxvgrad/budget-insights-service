@@ -1,8 +1,8 @@
 package com.ploter.budgetinsights.application.bankstatement
 
 import com.ploter.budgetinsights.application.bankstatement.command.UploadBankStatementCommand
-import com.ploter.budgetinsights.application.banktransactionclassification.ClassifyBankTransaction
-import com.ploter.budgetinsights.domain.model.TimePoint
+import com.ploter.budgetinsights.domain.model.Amount
+import com.ploter.budgetinsights.domain.model.DatePoint
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatement
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementFactory
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementRepository
@@ -10,14 +10,13 @@ import com.ploter.budgetinsights.domain.model.bankstatementtemplate.BankStatemen
 import com.ploter.budgetinsights.domain.model.banktransaction.BankTransactionFactory
 import com.ploter.budgetinsights.domain.model.banktransaction.BankTransactionRepository
 import com.ploter.budgetinsights.domain.model.banktransactionclassification.BankTransactionClassificationRepository
+import com.ploter.budgetinsights.domain.model.banktransactionclassification.BankTransactionClassifier
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroup
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupFactory
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupRepository
 import com.ploter.budgetinsights.domain.model.importgroup.ImportSourceId
 import com.ploter.budgetinsights.domain.model.importgroup.ImportSourceType
 import com.ploter.budgetinsights.domain.model.parser.FileParser
-import java.math.BigDecimal
-import java.time.Instant
 import java.util.function.Function
 
 class UploadBankStatement(
@@ -28,7 +27,7 @@ class UploadBankStatement(
   private val bankStatementRepository: BankStatementRepository,
   private val importGroupFactory: ImportGroupFactory,
   private val importGroupRepository: ImportGroupRepository,
-  private val classifyBankTransaction: ClassifyBankTransaction,
+  private val bankTransactionClassifier: BankTransactionClassifier,
   private val bankTransactionClassificationRepository: BankTransactionClassificationRepository,
   private val parsers: List<FileParser>
 ) {
@@ -66,8 +65,8 @@ class UploadBankStatement(
 
         bankTransactionFactory.create(
           importGroupId = import.id,
-          date = TimePoint(Instant.parse(date)),
-          amount = BigDecimal(amount),
+          date = DatePoint.of(date!!),
+          amount = Amount.of(amount!!),
           currency = currency!!,
           description = description!!,
           merchant = merchant!!,
@@ -76,8 +75,8 @@ class UploadBankStatement(
         )
     }
 
-    val classifications = transactions.map { t ->
-      classifyBankTransaction.execute(t)
+    val classifications = transactions.mapNotNull { t ->
+      bankTransactionClassifier.execute(t)
     }
 
     bankTransactionRepository.save(transactions)

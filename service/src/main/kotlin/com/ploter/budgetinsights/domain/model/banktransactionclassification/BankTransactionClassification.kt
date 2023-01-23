@@ -7,5 +7,5 @@ class BankTransactionClassification(
   val bankTransactionId: BankTransactionId,
   val categoryFiftyThirtyTwenty: CategoryFiftyThirtyTwenty,
   val categoryDetailed: CategoryDetailed,
-  val comment: String,
+  val comment: String?,
 )

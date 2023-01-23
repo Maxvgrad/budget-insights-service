@@ -1,4 +1,3 @@
 ﻿Customer account no,"Document no","Date","Sender/receiver account","Sender/receiver name","Sender bank code","Empty","Debit/Credit (D/C)","Amount","Reference number","Archiving code","Description","Fee","Currency","Personal code or register code","Sender/receiver bank BIC","Ultimate debtor name","Transaction reference","Account servicer reference"
 EE333333333333333333,507,2022-11-02,EE111111111111111111,Tallinna Ulikool,767,,"D",-200.00,"","2022110200643182",English test,0.00,"EUR","",HABDEE3XXXX,"",600443382,0FA0AF8E
 EE333333333333333333,508,2022-11-04,EE222222222222222222,Telia Eesti AS,689,,"D",-37.18,1030454572,"2022110401578818",Makse,0.00,EUR,"",LHVBEE33XXX,"",601579114,D4C58924
-,,,

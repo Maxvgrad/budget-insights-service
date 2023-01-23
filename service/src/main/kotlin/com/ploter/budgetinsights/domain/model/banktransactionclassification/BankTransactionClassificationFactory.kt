@@ -7,6 +7,6 @@ interface BankTransactionClassificationFactory {
     bankTransactionId: BankTransactionId,
     categoryFiftyThirtyTwenty: CategoryFiftyThirtyTwenty,
     categoryDetailed: CategoryDetailed,
-    comment: String
+    comment: String?
   ): BankTransactionClassification
 }

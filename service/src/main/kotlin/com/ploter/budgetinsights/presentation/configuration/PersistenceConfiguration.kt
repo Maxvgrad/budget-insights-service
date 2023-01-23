@@ -1,7 +1,6 @@
 package com.ploter.budgetinsights.presentation.configuration
 
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementSequence
-import com.ploter.budgetinsights.domain.model.banktransactionclassification.JooqBankTransactionClassificationRepository
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupSequence
 import com.ploter.budgetinsights.infrastracture.persistence.bankstatement.JooqBankStatementRepository
 import com.ploter.budgetinsights.infrastracture.persistence.bankstatement.JooqBankStatementSequence
@@ -10,6 +9,7 @@ import com.ploter.budgetinsights.infrastracture.persistence.bankstatementtemplat
 import com.ploter.budgetinsights.infrastracture.persistence.banktransaction.JooqBankTransactionRepository
 import com.ploter.budgetinsights.infrastracture.persistence.banktransaction.JooqBankTransactionSequence
 import com.ploter.budgetinsights.infrastracture.persistence.banktransaction.PersistentBankTransactionFactory
+import com.ploter.budgetinsights.infrastracture.persistence.banktransactionclassification.JooqBankTransactionClassificationRepository
 import com.ploter.budgetinsights.infrastracture.persistence.banktransactionclassification.JooqBankTransactionClassificationSequence
 import com.ploter.budgetinsights.infrastracture.persistence.banktransactionclassification.PersistentBankTransactionClassificationFactory
 import com.ploter.budgetinsights.infrastracture.persistence.importgroup.JooqImportGroupRepository
@@ -44,7 +44,10 @@ class PersistenceConfiguration {
   )
 
   @Bean
-  fun bankTransactionRepository(dsl: DSLContext) = JooqBankTransactionRepository(dsl)
+  fun bankTransactionRepository(
+    dsl: DSLContext,
+    persistentBankTransactionFactory: PersistentBankTransactionFactory) =
+    JooqBankTransactionRepository(dsl, persistentBankTransactionFactory)
 
   @Bean
   fun importGroupRepository() = JooqImportGroupRepository()
@@ -77,6 +80,8 @@ class PersistenceConfiguration {
   )
 
   @Bean
-  fun bankTransactionClassificationRepository() = JooqBankTransactionClassificationRepository()
+  fun bankTransactionClassificationRepository(
+    dsl: DSLContext
+  ) = JooqBankTransactionClassificationRepository(dsl)
 
 }

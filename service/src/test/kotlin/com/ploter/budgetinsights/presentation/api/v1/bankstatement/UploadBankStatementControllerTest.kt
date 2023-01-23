@@ -5,7 +5,6 @@ import org.springframework.mock.web.MockMultipartFile
 import org.springframework.test.web.servlet.multipart
 import kotlin.test.Test
 
-
 class UploadBankStatementControllerTest : BaseWebLayerTest() {
 
   @Test
