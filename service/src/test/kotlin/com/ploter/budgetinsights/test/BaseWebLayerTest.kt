@@ -1,11 +1,14 @@
 package com.ploter.budgetinsights.test
 
-import com.ploter.budgetinsights.infrastracture.persistence.jooq.model.Tables.*
+import com.ploter.budgetinsights.infrastracture.persistence.jooq.model.Tables.BANK_STATEMENT
+import com.ploter.budgetinsights.infrastracture.persistence.jooq.model.Tables.BANK_TRANSACTION
+import com.ploter.budgetinsights.infrastracture.persistence.jooq.model.Tables.BANK_TRANSACTION_CLASSIFICATION
+import com.ploter.budgetinsights.infrastracture.persistence.jooq.model.Tables.IMPORT_GROUP
 import com.ploter.budgetinsights.presentation.configuration.ApplicationConfiguration
 import com.ploter.budgetinsights.presentation.configuration.DataSourceConfiguration
 import com.ploter.budgetinsights.presentation.configuration.ParserConfiguration
 import com.ploter.budgetinsights.presentation.configuration.PersistenceConfiguration
-import com.ploter.budgetinsights.presentation.configuration.SpringConfiguration
+import com.ploter.budgetinsights.presentation.configuration.SpringWebMvcConfiguration
 import org.jooq.DSLContext
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
@@ -20,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext
 @ExtendWith(SpringExtension::class)
 @WebAppConfiguration
 @ContextConfiguration(classes = [
-  SpringConfiguration::class,
+  SpringWebMvcConfiguration::class,
   ApplicationConfiguration::class,
   DataSourceConfiguration::class,
   PersistenceConfiguration::class,

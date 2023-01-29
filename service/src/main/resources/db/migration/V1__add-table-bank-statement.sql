@@ -33,7 +33,7 @@ CREATE SEQUENCE IF NOT EXISTS bank_transaction_id_seq AS BIGINT;
 CREATE TABLE IF NOT EXISTS bank_transaction_classification
 (
   id                           BIGINT  NOT NULL PRIMARY KEY,
-  bank_transaction_id          BIGINT  NOT NULL,
+  bank_transaction_id          BIGINT  NOT NULL UNIQUE,
   category_fifty_thirty_twenty VARCHAR NOT NULL DEFAULT '',
   category_detailed            VARCHAR NOT NULL DEFAULT '',
   comment                      VARCHAR NOT NULL DEFAULT ''

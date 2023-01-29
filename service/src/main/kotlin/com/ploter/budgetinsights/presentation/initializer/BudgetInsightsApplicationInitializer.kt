@@ -1,6 +1,10 @@
 package com.ploter.budgetinsights.presentation.initializer
 
-import com.ploter.budgetinsights.presentation.configuration.*
+import com.ploter.budgetinsights.presentation.configuration.ApplicationConfiguration
+import com.ploter.budgetinsights.presentation.configuration.DataSourceConfiguration
+import com.ploter.budgetinsights.presentation.configuration.ParserConfiguration
+import com.ploter.budgetinsights.presentation.configuration.PersistenceConfiguration
+import com.ploter.budgetinsights.presentation.configuration.SpringWebMvcConfiguration
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 
 class BudgetInsightsApplicationInitializer : AbstractAnnotationConfigDispatcherServletInitializer() {
@@ -13,7 +17,7 @@ class BudgetInsightsApplicationInitializer : AbstractAnnotationConfigDispatcherS
     // 	If an application context hierarchy is not required,
     // 	applications can return all configuration through getRootConfigClasses() and null from getServletConfigClasses().
     return arrayOf(
-      SpringConfiguration::class.java,
+      SpringWebMvcConfiguration::class.java,
       ApplicationConfiguration::class.java,
       DataSourceConfiguration::class.java,
       PersistenceConfiguration::class.java,

@@ -21,8 +21,10 @@ class JooqBankTransactionClassificationRepository(private val dsl: DSLContext) :
     }
   }
 
-  override fun findAll(): List<BankTransactionClassification> {
-    return dsl.selectFrom(BANK_TRANSACTION_CLASSIFICATION).fetch().map { record -> fromRecord(record) }
+  override fun find(transactionIds: List<BankTransactionId>): List<BankTransactionClassification> {
+    return dsl.selectFrom(BANK_TRANSACTION_CLASSIFICATION)
+      .where(BANK_TRANSACTION_CLASSIFICATION.BANK_TRANSACTION_ID.`in`(transactionIds.map { it.value }))
+      .fetch().map { record -> fromRecord(record) }
   }
 
   private fun toRecord(bankTransactionClassification: BankTransactionClassification): BankTransactionClassificationRecord {

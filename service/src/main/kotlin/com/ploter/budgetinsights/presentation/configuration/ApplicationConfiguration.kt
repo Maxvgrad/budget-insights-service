@@ -1,6 +1,7 @@
 package com.ploter.budgetinsights.presentation.configuration
 
 import com.ploter.budgetinsights.application.bankstatement.UploadBankStatement
+import com.ploter.budgetinsights.application.banktransaction.SearchBankTransaction
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementFactory
 import com.ploter.budgetinsights.domain.model.bankstatement.BankStatementRepository
 import com.ploter.budgetinsights.domain.model.bankstatementtemplate.BankStatementTemplateRepository
@@ -42,6 +43,15 @@ class ApplicationConfiguration {
     bankTransactionClassifier = classifyBankTransaction,
     bankTransactionClassificationRepository = bankTransactionClassificationRepository,
     parsers = parsers.also { check(it.isNotEmpty()) }
+  )
+
+  @Bean
+  fun searchBankTransaction(
+    bankTransactionRepository: BankTransactionRepository,
+    bankTransactionClassificationRepository: BankTransactionClassificationRepository,
+  ) = SearchBankTransaction(
+    bankTransactionRepository = bankTransactionRepository,
+    bankTransactionClassificationRepository = bankTransactionClassificationRepository,
   )
 
   @Bean

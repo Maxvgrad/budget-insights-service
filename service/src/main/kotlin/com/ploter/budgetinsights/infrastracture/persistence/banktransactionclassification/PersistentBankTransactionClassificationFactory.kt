@@ -15,7 +15,7 @@ class PersistentBankTransactionClassificationFactory(
     bankTransactionId: BankTransactionId,
     categoryFiftyThirtyTwenty: CategoryFiftyThirtyTwenty,
     categoryDetailed: CategoryDetailed,
-    comment: String?
+    comment: String
   ): BankTransactionClassification {
     return BankTransactionClassification(
       id = bankTransactionClassificationSequence.nextVal(),

@@ -28,7 +28,7 @@ class InMemoryClassifyBankTransaction(
           bankTransactionId = bankTransaction.id,
           categoryFiftyThirtyTwenty = c.first,
           categoryDetailed = c.second,
-          comment = c.third
+          comment = c.third ?: ""
         )
       }
   }

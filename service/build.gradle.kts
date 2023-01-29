@@ -5,7 +5,7 @@ import org.jooq.meta.jaxb.Logging
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
-    kotlin("plugin.jpa")
+    kotlin("plugin.jpa") // ? Why
     id("war")
     id("java-library")
     id("org.flywaydb.flyway") version "9.8.1"
@@ -27,6 +27,7 @@ dependencies {
   implementation("commons-fileupload:commons-fileupload:1.4")
 
   implementation("javax.servlet:javax.servlet-api:4.0.1")
+  implementation(project(":interface"))
   implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
 
   implementation("org.apache.commons:commons-csv:1.9.0")
