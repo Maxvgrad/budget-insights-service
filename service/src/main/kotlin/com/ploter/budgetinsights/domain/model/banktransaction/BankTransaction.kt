@@ -4,6 +4,10 @@ import com.ploter.budgetinsights.domain.model.Amount
 import com.ploter.budgetinsights.domain.model.DatePoint
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId
 
+
+// TODO: Add add account number
+// TODO: Add add account number
+
 class BankTransaction(
   val id: BankTransactionId,
   val importGroupId: ImportGroupId,

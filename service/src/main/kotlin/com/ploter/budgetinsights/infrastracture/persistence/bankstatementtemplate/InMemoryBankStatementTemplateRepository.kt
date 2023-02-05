@@ -2,12 +2,14 @@ package com.ploter.budgetinsights.infrastracture.persistence.bankstatementtempla
 
 import com.ploter.budgetinsights.domain.model.bankstatementtemplate.BankStatementTemplate
 import com.ploter.budgetinsights.domain.model.bankstatementtemplate.BankStatementTemplateRepository
+import com.ploter.budgetinsights.domain.model.bankstatementtemplate.DateHeader
 
 class InMemoryBankStatementTemplateRepository : BankStatementTemplateRepository {
 
   override fun find(): List<BankStatementTemplate> = listOf(
+    //LHV
     BankStatementTemplate(
-      date = "Date",
+      date = DateHeader(name = "Date"),
       amount = "Amount",
       currency = "Currency",
       description = "Description",
@@ -15,14 +17,15 @@ class InMemoryBankStatementTemplateRepository : BankStatementTemplateRepository 
       reference = "Reference number",
       account = "Sender/receiver account",
     ),
+    //Wise
     BankStatementTemplate(
-      date = "Date",
+      date = DateHeader(name = "Date", pattern = "dd-MM-yyyy"),
       amount = "Amount",
       currency = "Currency",
       description = "Description",
       merchant = "Merchant",
-      reference = "Reference",
-      account = "Account",
+      reference = "Payment Reference",
+      account = "",
     )
   )
 

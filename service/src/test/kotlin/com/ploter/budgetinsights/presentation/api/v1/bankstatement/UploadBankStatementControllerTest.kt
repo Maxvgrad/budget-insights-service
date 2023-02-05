@@ -8,17 +8,29 @@ import kotlin.test.Test
 class UploadBankStatementControllerTest : BaseWebLayerTest() {
 
   @Test
-  fun test() {
+  fun `test LHV account statement upload`() {
     val fileName = "/statement/csv/LHV_Account_Statement_2022-12-17.csv"
     val fileBytes = this.javaClass.getResourceAsStream(fileName).use { it!!.readBytes() }
     val file = MockMultipartFile("file", fileName.split("/").last(), "text/csv", fileBytes)
 
     mockMvc.multipart("/statements") {
       file(file)
+    }.andExpect {
+      status { isOk() }
     }
-      .andExpect {
-        status { isOk() }
-      }
+  }
+
+  @Test
+  fun `test Wise account statement upload`() {
+    val fileName = "/statement/csv/Wise_Account_Statement.csv"
+    val fileBytes = this.javaClass.getResourceAsStream(fileName).use { it!!.readBytes() }
+    val file = MockMultipartFile("file", fileName.split("/").last(), "text/csv", fileBytes)
+
+    mockMvc.multipart("/statements") {
+      file(file)
+    }.andExpect {
+      status { isOk() }
+    }
   }
 
 }

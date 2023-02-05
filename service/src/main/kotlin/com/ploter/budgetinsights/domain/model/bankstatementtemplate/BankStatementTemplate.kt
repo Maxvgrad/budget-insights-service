@@ -1,7 +1,7 @@
 package com.ploter.budgetinsights.domain.model.bankstatementtemplate
 
 data class BankStatementTemplate(
-        val date: String,
+        val date: DateHeader,
         val amount: String,
         val currency: String,
         val description: String,
@@ -10,6 +10,6 @@ data class BankStatementTemplate(
         val account: String,
 ) {
   fun getTemplateHeaderNames() = listOf(
-    date, amount, currency, description, merchant, reference, account
+    date.name, amount, currency, description, merchant, reference, account
   )
 }

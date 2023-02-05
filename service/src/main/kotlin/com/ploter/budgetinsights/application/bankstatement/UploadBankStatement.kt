@@ -55,17 +55,17 @@ class UploadBankStatement(
 
 
     val transactions = file.rows.map { record ->
-        val date = record[template.date]
+        val date = record[template.date.name]
         val amount = record[template.amount]
         val currency = record[template.currency]
         val description = record[template.description]
         val merchant = record[template.merchant]
         val reference = record[template.reference]
-        val account = record[template.account]
+        val account = record.get(template.account) ?: ""
 
         bankTransactionFactory.create(
           importGroupId = import.id,
-          date = DatePoint.of(date!!),
+          date = DatePoint.of(date!!, template.date.pattern),
           amount = Amount.of(amount!!),
           currency = currency!!,
           description = description!!,

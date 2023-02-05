@@ -28,7 +28,7 @@ internal class BankTransactionTransformerTest {
     assertEquals(transaction.merchant, resultTransaction.merchant)
     assertEquals(transaction.reference, resultTransaction.reference)
     assertEquals(transaction.account, resultTransaction.account)
-    assertEquals(classification.categoryFiftyThirtyTwenty.name,
+    assertEquals(classification.categoryFiftyThirtyTwenty.name.lowercase(),
       resultTransaction.classification!!.categoryFiftyThirtyTwenty)
     assertEquals(classification.categoryDetailed.value, resultTransaction.classification!!.categoryDetailed)
     assertEquals(classification.comment, resultTransaction.classification!!.comment)

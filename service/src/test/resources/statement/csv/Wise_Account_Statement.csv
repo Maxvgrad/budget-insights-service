@@ -1,0 +1,5 @@
+"TransferWise ID",Date,Amount,Currency,Description,"Payment Reference","Running Balance","Exchange From","Exchange To","Exchange Rate","Payer Name","Payee Name","Payee Account Number",Merchant,"Card Last Four Digits","Card Holder Full Name",Attachment,Note,"Total fees"
+CARD-544,31-12-2022,-4.61,EUR,"Card transaction of 13.20 GEL Taxi",,44.73,EUR,GEL,2.88981,,,,"Taxi",0654,"John Doe",,,0.04
+CARD-544,31-12-2022,-13.80,EUR,"Card transaction of 39.55 GEL TBILISI",,49.34,EUR,GEL,2.88981,,,,"Cafe TBILISI",2797,"John Doe",,,0.11
+TRANSFER-572,29-12-2022,200.00,EUR,"Received money from John Doe with reference transaction-between-own-accounts/545","transaction-between-own-accounts/545",238.59,,,,"John Doe",,,,,,,,0.00
+TRANSFER-570,26-12-2022,-40.00,EUR,Sent money to International Charitable Foundation,donation,271.27,EUR,UAH,38.88520,,International Charitable Foundation,EE48,,,,,,0.00
