@@ -12,7 +12,8 @@ import com.ploter.budgetinsights.domain.model.banktransactionclassification.Bank
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupFactory
 import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupRepository
 import com.ploter.budgetinsights.domain.model.parser.FileParser
-import com.ploter.budgetinsights.infrastracture.banktransactionclassification.InMemoryClassifyBankTransaction
+import com.ploter.budgetinsights.infrastracture.banktransactionclassification.BankTransactionClassifierImpl
+import com.ploter.budgetinsights.infrastracture.banktransactionclassification.CsvClassificationFileLoader
 import com.ploter.budgetinsights.infrastracture.parser.csv.CsvFileParser
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -20,6 +21,7 @@ import org.springframework.core.io.Resource
 
 class ApplicationConfiguration {
 
+  @Suppress("LongParameterList")
   @Bean
   fun uploadBankStatement(
     bankTransactionRepository: BankTransactionRepository,
@@ -29,7 +31,7 @@ class ApplicationConfiguration {
     bankStatementTemplateRepository: BankStatementTemplateRepository,
     bankTransactionFactory: BankTransactionFactory,
     importGroupRepository: ImportGroupRepository,
-    classifyBankTransaction: InMemoryClassifyBankTransaction,
+    classifyBankTransaction: BankTransactionClassifierImpl,
     bankTransactionClassificationRepository: BankTransactionClassificationRepository,
     parsers: List<FileParser>
   ) = UploadBankStatement(
@@ -59,9 +61,9 @@ class ApplicationConfiguration {
     bankTransactionClassificationFactory: BankTransactionClassificationFactory,
     @Value("classpath:classification.csv") resourceFile: Resource,
     csvFileParser: CsvFileParser
-  ) = InMemoryClassifyBankTransaction(
+  ) = BankTransactionClassifierImpl(
     bankTransactionClassificationFactory = bankTransactionClassificationFactory,
-    resourceFile = resourceFile,
-    csvFileParser = csvFileParser
+    classificationFile = CsvClassificationFileLoader(csvFileParser = csvFileParser)
+      .loadClassificationPatterns(resourceFile)
   )
 }
