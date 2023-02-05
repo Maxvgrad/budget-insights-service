@@ -12,7 +12,7 @@ class BankTransactionClassifierImpl(
 
   override fun execute(bankTransaction: BankTransaction): BankTransactionClassification? {
     return classificationFile.data.entries
-      .find { it.key.matches(bankTransaction.description) || it.key.matches(bankTransaction.merchant) }
+      .find { it.key.containsMatchIn(bankTransaction.description) || it.key.containsMatchIn(bankTransaction.merchant) }
       ?.value?.let { c ->
         bankTransactionClassificationFactory.create(
           bankTransactionId = bankTransaction.id,

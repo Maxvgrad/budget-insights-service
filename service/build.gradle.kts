@@ -44,6 +44,7 @@ dependencies {
   testImplementation("org.springframework:spring-test:5.3.23")
   testImplementation(kotlin("test-common"))
   testImplementation(kotlin("test-junit5"))
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.0")
 }
 tasks.test {
     useJUnitPlatform()
