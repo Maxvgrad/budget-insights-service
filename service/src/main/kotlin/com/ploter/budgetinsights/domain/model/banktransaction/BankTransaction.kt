@@ -6,18 +6,19 @@ import com.ploter.budgetinsights.domain.model.importgroup.ImportGroupId
 
 
 // TODO: Add add account number
-// TODO: Add add account number
-
 class BankTransaction(
+  // bankAccount
+  // bankAccountPurpose ?
+  // bankName
   val id: BankTransactionId,
   val importGroupId: ImportGroupId,
   val date: DatePoint,
   val amount: Amount,
   val currency: String,
   val description: String,
-  val merchant: String,
+  val merchant: String, // Sender/receiver OR Payer/payee name
   val reference: String,
-  val account: String
+  val account: String // Sender/receiver OR Payer/payee account
 ) {
 
   override fun equals(other: Any?): Boolean {
