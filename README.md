@@ -14,3 +14,22 @@ In order to alter DB schema and update the code one would need to:
 docker exec -it <containerId> psql -U test -d postgres -c 'DROP DATABASE "budget-insights";'
 docker exec -it <containerId> psql -U test -d postgres -c 'CREATE DATABASE "budget-insights";'
 ```
+
+## Truncate tables
+
+```sql
+truncate bank_transaction, bank_transaction_classification;
+```
+
+## Upload multiple files
+
+```bash
+./scripts/file_upload.py ~/Downloads/statements
+```
+
+```bash
+curl --location --request POST 'http://localhost:8080/budget-insights/transactions' \
+--header 'Accept: text/csv;charset=UTF-8' \
+--header 'Content-Type: application/json' \
+>> ~/Downloads/bank-transactions_$(date +'%m-%d-%Y_%H:%M').csv
+```
